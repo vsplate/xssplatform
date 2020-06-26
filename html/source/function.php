@@ -128,6 +128,7 @@ function Val($name, $method = 'GET', $type = 0, $isArray = 0)
         break;
     case 2:
     default:
+        $value = ($isArray == 0) ? StripStr($value) : array_map('StripStr', (array)$value);
         break;
     }
     return $value;
@@ -245,102 +246,11 @@ function GetTimeShow($time = 0)
     }
     return $num . $unit . '前';
 }
-
-/* 发送邮件 */
-/*
-function SendMail($to='',$subject='',$body=''){
-    global $mailConfig;
-    require_once(ROOT_PATH.'/source/class/PHPMailer.class.php');
-    try{
-        $mail = new PHPMailer();                            // New instance, with exceptions enabled
-        switch($mailConfig['mailer']){                        // tell the class to use SMTP/Mail/Sendmail/Qmail
-            case 'smtp':
-                $mail->IsSMTP();
-                $mail->SMTPAuth   = true;                    // enable SMTP authentication
-                $mail->Host       = $mailConfig['host'];    // SMTP server
-                $mail->Port       = $mailConfig['port'];    // set the SMTP server port
-                $mail->Username   = $mailConfig['username'];// SMTP server username
-                $mail->Password   = $mailConfig['password'];// SMTP server password
-                break;
-            case 'mail':
-                $mail->IsMail();
-                break;
-            case 'sendmail':
-                $mail->IsSendMail();
-                break;
-            case 'qmail':
-                $mail->IsQMail();
-                break;
-            default:
-                return false;
-                break;
-        }
-        $mail->CharSet    = $mailConfig['charset'];
-        $mail->Encoding   = 'base64';
-        $mail->SMTPDebug  = false;
-        $mail->AddReplyTo($mailConfig['username'],$mailConfig['name']);
-    
-        $mail->From       = $mailConfig['username'];
-        $mail->FromName   = $mailConfig['name'];
-        $mail->AddAddress($to);
-    
-        $mail->Subject  = $subject;
-        $mail->WordWrap   = 80;
-        $mail->MsgHTML($body);
-        $mail->IsHTML($mailConfig['contentType'] ? true : false);
-        $mail->Send();
-        return true;
-    }catch(phpmailerException $e){
-        return false;
-    }
-}
-*/
 //发送邮件
 function SendMail($to = '', $subject = '', $body = '')
 {
-    global $mailConfig;
-    include_once ROOT_PATH . '/source/class/PHPMailer.class.php';
-    $fromlist = array(
-        array('host' => 'smtp.qq.com', 'user' => '123456@qq.com', 'pass' => '123456'),
-    );
-    shuffle($fromlist);//妈妈再也不用担心我学习了o(>﹏<)o 轮流使用邮箱发送
-
-    //go
-    try {
-        foreach ($fromlist as $curmail) {
-            $mail = new PHPMailer();
-            $mail->IsSMTP();
-            if (defined('z_dm') && z_dm >= 1) {
-                $mail->SMTPDebug = 2;
-            }                     // enables SMTP debug information (for testing)
-            else {
-                $mail->SMTPDebug = 0;
-            }                     // enables SMTP debug information (for testing)
-            $mail->SMTPAuth = true;
-            $mail->SMTPSecure = "ssl";                           //当邮件服务器未使用SSL的时候 注释本段
-            $mail->Port = 465;                                   //当邮件服务器未使用SSL的时候 端口改为25
-            $mail->From = $curmail['user'];
-            $mail->FromName = "饼干商城";
-            $mail->Host = $curmail['host'];
-            $mail->Username = $curmail['user'];
-            $mail->Password = $curmail['pass'];
-            $mail->CharSet = "UTF-8";
-            $mail->AddAddress($to, $to);
-            $mail->Subject = $subject;
-            $mail->AltBody = "To view the message, please use an HTML compatible email viewer!";
-            $mail->MsgHTML($body);
-            $mail->IsHTML(true);
-            $ret = $mail->Send();
-
-            if ($ret) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    } catch (phpmailerException $e) {
-        return 0;
-    }
+    // 禁止发送邮件
+    return false;
 }
 
 /* Tb 获取table name */
@@ -352,12 +262,16 @@ function Tb($name)
 /* 短网址字符 */
 function ShortUrlCode($existed = array(), $num = 6)
 {
-    $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $len = strlen($str);
-    $code = '';
-    for ($i = 0; $i < $num; $i++) {
-        $k = rand(0, $len - 1);
-        $code .= $str[$k];
+    if(function_exists("openssl_random_pseudo_bytes")){
+        $code = bin2hex(openssl_random_pseudo_bytes(ceil($num/2)));
+    }else{
+        $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $len = strlen($str);
+        $code = '';
+        for ($i = 0; $i < $num; $i++) {
+            $k = rand(0, $len - 1);
+            $code .= $str[$k];
+        }
     }
     if (in_array($code, $existed)) {
         $code = ShortUrlCode($existed, $num);
@@ -365,25 +279,11 @@ function ShortUrlCode($existed = array(), $num = 6)
     return $code;
 }
 
-/*预留短信接口
-function SendSMS($to='',$text=''){
-$ch = curl_init("http://www.xxx.cn/phpfetion/example/send.php?tel=1111111&pwd=222222222&aim=$to&text=$text") ;
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true) ; // 获取数据返回
-curl_setopt($ch, CURLOPT_BINARYTRANSFER, true) ; // 在启用 CURLOPT_RETURNTRANSFER 时候将获取数据返回
-$output = curl_exec($ch);
-if($output == 'ok')
-return 1;
-else
-return 0;
-}
-*/
-
 /* 飞信接口 2014.1.24*/
 function SendSMS($tel, $pwd, $to = '', $text = '')
 {
-    include ROOT_PATH . '/source/api/PHPFetion.php';
-    $fetion = new PHPFetion($tel, $pwd);
-    $fetion->send($to, $text);
+    // 禁止短信
+    return false;
 }
 
 /*网页访问容错代码*/
@@ -406,13 +306,8 @@ function vita_get_url_content($url)
 /*长地址转化成短地址*/
 function LongUrltoShortUrl($longurl = '')
 {
-    //新浪API接口
-    $Url = "http://api.t.sina.com.cn/short_url/shorten.json?source=3172786102&url_long=" . $longurl;
-
-
-    $Url = vita_get_url_content($Url);
-    $shortUrl = json_decode($Url, true);
-    return $shortUrl[0]['url_short'];
+    // 禁止自动短网址，防止IP泄漏
+    return $longurl;
 }
 
 

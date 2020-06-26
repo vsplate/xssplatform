@@ -23,24 +23,7 @@ class Image
      */
     public function Upload($imgName='')
     {
-        if(empty($this->imgObj['tmp_name']) || $this->imgObj['size']<=0) {
-            $this->error='图片上传未成功,请重新选择图片';
-            return false;
-        }
-        //判断图片格式
-        if(!in_array($this->imgType, array('jpg','jpeg','png','gif')) || !in_array($this->imgObj['type'], array('image/jpeg','image/png','image/gif'))) {
-            $this->error='图片格式不正确';
-            return false;
-        }
-        if(file_exists($imgName)) { @unlink($imgName);
-        }
-        //上传
-        if(move_uploaded_file($this->imgObj['tmp_name'], $imgName)) {
-            return true;
-        }else{
-            $this->error='图片上传未成功,请重新选择图片';
-            return false;
-        }
+        // 禁用上传图片
     }
     
     /**

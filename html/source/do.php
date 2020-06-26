@@ -6,7 +6,9 @@
  */
 if(!defined('IN_OLDCMS')) { die('Access Denied');
 }
-
+// 开源XSS平台通用信息泄露漏洞 https://silic.wiki/post/Open_Source_XSS_Platform_Vulnerabilities
+// 禁用 API，防止安全问题
+exit;
 $auth=Val('auth', 'GET');
 $db=DBConnect();
 $project=$db->FirstRow("SELECT * FROM ".Tb('project')." WHERE authCode='{$auth}'");

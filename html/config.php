@@ -19,7 +19,7 @@ $config = array (
   array (
     'sitename' => 'XSS平台',
     'sitedesc' => '',
-    'keywords' => '技术交流,程序员,设计,项目,创业,技术,网络安全,技术文章,1.2',
+    'keywords' => '',
     'description' => '',
     'adminmail' => '',
   ),
@@ -34,5 +34,5 @@ $config = array (
   ),
   'timezone' => 'Asia/Shanghai',
   'expires' => 3600,
-  'debug' => true,
+  'debug' => false,
 );

@@ -4,7 +4,7 @@
  * ----------------------------------------------------------------
  */
 include('../init.php');
-
+exit; // 禁用keepsession, IP泄漏风险
 $db=DBConnect();
 $rows=$db->Dataset("SELECT * FROM ".Tb('keepsession'));
 

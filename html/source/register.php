@@ -6,6 +6,7 @@
  */
 if(!defined('IN_OLDCMS')) { die('Access Denied');
 }
+exit; // 禁止注册
 if(REGISTER=='close') { ShowError('注册功能已关闭');
 }
 

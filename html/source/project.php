@@ -36,8 +36,8 @@ case 'create_submit':
     //生成短网址字符
     $existedStrs = $db->FirstColumn("SELECT urlKey FROM " . Tb('project') . "");
     $urlKey = ShortUrlCode($existedStrs);
-    //生成authCode
-    $authCode = md5('xsser_' . $urlKey . '_' . $user->userId . '_' . time());
+    //生成authCode，增加复杂度
+    $authCode = md5('xsser_' . $urlKey . '_' . $user->userId . '_' . time(). ShortUrlCode(array(), 32));
     $values = array(
         'title' => $title,
         'description' => $description,

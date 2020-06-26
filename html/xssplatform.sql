@@ -127,13 +127,6 @@ CREATE TABLE `oc_project` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of oc_project
--- ----------------------------
-BEGIN;
-INSERT INTO `oc_project` VALUES (1, 2, 'default', '默认项目', '[1]', '[]', '', 'Q7yYOv', '54c6497e603eeec9810f7b9111bc240c', 1544243397);
-COMMIT;
-
--- ----------------------------
 -- Table structure for oc_project_content
 -- ----------------------------
 DROP TABLE IF EXISTS `oc_project_content`;
@@ -186,13 +179,6 @@ CREATE TABLE `oc_session` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of oc_session
--- ----------------------------
-BEGIN;
-INSERT INTO `oc_session` VALUES (2, '97ba8108519344a5ba4d6ddef89b3115', 'aa6554d24c4954a9321eec304745dc6a', '127.0.0.1', 'a:6:{s:6:\"userId\";s:1:\"2\";s:10:\"adminLevel\";s:1:\"1\";s:8:\"userName\";s:5:\"admin\";s:9:\"avatarImg\";N;s:11:\"avatarImg_s\";N;s:9:\"signature\";N;}', 1544586439, 1544243407, 1544240839);
-COMMIT;
-
--- ----------------------------
 -- Table structure for oc_user
 -- ----------------------------
 DROP TABLE IF EXISTS `oc_user`;
@@ -228,7 +214,7 @@ CREATE TABLE `oc_user` (
 -- Records of oc_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `oc_user` VALUES (2, 1, 'admin', '72728ceaae55e0ac4698d6add4edd67c', '78778443@qq.com', '','', NULL, 0, NULL, 0, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0, 0, 1544240839, 1544240824);
+INSERT INTO `oc_user` VALUES (2, 1, 'admin', '72728ceaae55e0ac4698d6add4edd67c', 'xssplateform@vsplate.com', '','', NULL, 0, NULL, 0, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0, 0, 1544240839, 1544240824);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

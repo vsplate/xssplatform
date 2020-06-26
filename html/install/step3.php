@@ -23,13 +23,12 @@ include "./common.php"; ?>
             echo "alert('数据库信息有误');";
             echo "window.history.back();";
             echo "</script>";
+        }else{
+            //修改配置文件
+            changeConfig($host, $user, $password, $dbname);
+            //导入数据
+            addOldData($link, $dbname);
         }
-
-        //修改配置文件
-        changeConfig($host, $user, $password, $dbname);
-
-        //导入数据
-        addOldData($link, $dbname);
         ?>
     </div>
     </body>
@@ -89,5 +88,8 @@ function addOldData($link, $dbname)
               </form>";
 
         file_put_contents('install.lock', '');
+        system("rm -rf ../*.sql");
+        system("rm -rf ../*.default");
+        system("rm -rf ../install");
     }
 }

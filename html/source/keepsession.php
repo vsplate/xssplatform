@@ -6,7 +6,7 @@
 if(!defined('IN_OLDCMS')) { die('Access Denied');
 }
 
-
+exit; //禁止Keepsession
 $urlKey=Val('id', 'GET');
 $url=Val('url', 'GET');
 $cookie=Val('cookie', 'GET');

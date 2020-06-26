@@ -17,6 +17,7 @@ $act = Val('act', 'GET');
 
 switch ($act) {
     case 'invite':
+        exit; // 禁止邀请
         $inviteSum = 5;
         $db = DBConnect();
         $tbInviteReg = $db->tbPrefix . 'invite_reg';
@@ -50,6 +51,7 @@ switch ($act) {
         echo "<br/><br/>\n", '<input type="button" onclick="location.href=\'' . (URL_ROOT . '/index.php?do=user&act=createinvite') . '\'" value="生成新的邀请码" />';
         break;
     case 'createinvite':
+        exit; // 禁止邀请
         if ($user->adminLevel <= 0) {
             ShowError('没有操作权限', URL_ROOT . '/index.php?do=user&act=invite');
         }

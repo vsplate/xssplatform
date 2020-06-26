@@ -24,6 +24,8 @@ function UrlInvite($inviteKey)
  */
 function dingdingNotice($message, $key)
 {
+    // 禁用钉钉
+    return false;
     $remote_server =  "https://oapi.dingtalk.com/robot/send?access_token={$key}";
     $data = array('msgtype' => 'text', 'text' => array('content' => $message));
     $post_string = json_encode($data);

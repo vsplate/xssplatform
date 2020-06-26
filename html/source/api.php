@@ -78,25 +78,6 @@ if ($id) {
 
 
         $db->AutoExecute(Tb('project_content'), $values);
-        //Getcookie在上面的变量里
-        $uid = $project['userId'];
-        $userInfo = $db->FirstRow("SELECT * FROM " . Tb('user') . " WHERE id={$uid}");
-        $msg = explode("|", $userInfo['message']);
-        if ($userInfo['phone'] && $msg[1] == 1) {
-            SendSMS('13800138000', '123456', $userInfo['phone'], "尊敬的" . $userInfo['userName'] . "，您在" . URL_ROOT . " 预订的猫饼干，Cookie:{$Getcookie}已经到货！详情请登陆：" . URL_ROOT . " 查看！");
-            //参数:发送的飞信号 飞信密码
-        }
-
-        //发送内容
-        $sendStr = "尊敬的" . $userInfo['userName'] . "，您在" . URL_ROOT . " 预订的猫饼干<br>Cookie:{$Getcookie}<br>已经到货！<br>详情请登陆：" . URL_ROOT . " 查看。";
-        if ($userInfo['email'] && $msg[0] == 1) {
-            SendMail($userInfo['email'], URL_ROOT . "饼干商城", $sendStr);//Getcookie在上面的变量里
-        }
-        //钉钉通知
-        if ($userInfo['dingding'] && $msg[2] == 1) {
-            dingdingNotice($sendStr, $userInfo['dingding']);
-        }
-
     } else {
         $db->Execute("UPDATE " . Tb('project_content') . " SET num=num+1,updateTime='" . time() . "' WHERE projectId='{$project['id']}' AND cookieHash='{$cookieHash}'");
     }

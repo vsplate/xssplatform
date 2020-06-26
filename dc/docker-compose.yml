@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: xss
+      MYSQL_USER: xss
+      MYSQL_PASSWORD: xss
+  web:
+    image: vsplate/xssplatform:latest
+    depends_on:
+      - db
+    ports:
+      - "80:80"
