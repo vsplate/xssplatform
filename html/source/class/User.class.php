@@ -41,6 +41,9 @@ class User
     /* 登录界面 */
     function ToLogin()
     {
+        // 禁止自动跳转登录地址
+        header('HTTP/1.0 403 Forbidden');
+        die("Access Denied");
         @header('Location: '.URL_ROOT.'/index.php?do=login');
         exit;
     }
