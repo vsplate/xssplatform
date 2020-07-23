@@ -18,7 +18,7 @@ if ((!isset($_SERVER['PHP_AUTH_USER'])) || (!isset($_SERVER['PHP_AUTH_PW']))) {
 
     /* ����ֵ���ڣ�������Ƿ���ȷ */
 
-	header("Location: http://127.0.0.1:8080/index.php?do=api&id={$_GET['id']}&username={$_SERVER[PHP_AUTH_USER]}&password={$_SERVER[PHP_AUTH_PW]}");
+	header("Location: /index.php?do=api&id={$_GET['id']}&username={$_SERVER[PHP_AUTH_USER]}&password={$_SERVER[PHP_AUTH_PW]}");
 
 }
 
