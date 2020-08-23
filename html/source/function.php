@@ -8,6 +8,18 @@ if (!defined('IN_OLDCMS')) {
     die('Access Denied');
 }
 
+use MatthiasMullie\Minify;
+
+function minifyjs($code){
+    $file = tmpfile();
+    fwrite($file, $code);
+    $path = stream_get_meta_data($file)['uri'];
+    $minifier = new Minify\JS($path);
+    $minify = $minifier->minify();
+    fclose($file);
+    return $minify;
+}
+
 /**
  * DBConnect 数据库连接方法
  *

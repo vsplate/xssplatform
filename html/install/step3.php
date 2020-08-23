@@ -83,7 +83,7 @@ function addOldData($link, $dbname)
         exit("导入数据失败:" . mysqli_error($link));
     } else {
         echo "导入数据成功!" . PHP_EOL;
-        echo "<form action='../index.php'>
+        echo "<form action='../index.php?do=login'>
                 <input class=\"btn btn-success\" type='submit' value='进入首页'/>
               </form>";
 

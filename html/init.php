@@ -7,6 +7,7 @@
 define('IN_OLDCMS', true);
 define('ROOT_PATH', dirname(__FILE__));
 
+require_once(ROOT_PATH."/vendor/autoload.php");
 require ROOT_PATH.'/config.php';
 //调试模式
 if($config['debug']==false) { error_reporting(0);

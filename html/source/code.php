@@ -35,11 +35,11 @@ if(!empty($moduleIds)) {
                     $module['code']=str_replace('{set.'.$setkey.'}', $moduleSetKeys["setkey_{$module['id']}_{$setkey}"] ?? '', $module['code']);
                 }
             }
-            echo htmlspecialchars_decode($module['code'], ENT_QUOTES);
+            echo minifyjs(htmlspecialchars_decode($module['code'], ENT_QUOTES));
         }    
     }
 }
 /* 模块 end */
 /* 项目自定义代码 */
-echo htmlspecialchars_decode($project['code'], ENT_QUOTES);
+echo minifyjs(htmlspecialchars_decode($project['code'], ENT_QUOTES));
 ?>
